@@ -16,7 +16,7 @@ my $pwd = "mikki";
 my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
 print "$dbh\n";
 
-# add device to devices table;
+# Update familiar column of devices
 sub update_dev {
   my $dev = $_[0];
   my $sth = $dbh->prepare("UPDATE devices  
@@ -26,7 +26,7 @@ sub update_dev {
   #print "Device familiarity Updated: " . $sth->rows . "\n";
 }
 
-# Update familiar column of devices
+# add device to devices table;
 sub add_dev {
   my $dev = $_[0];
   my $sth = $dbh->prepare("INSERT INTO devices (mac_addr, familiar) 
@@ -63,7 +63,8 @@ my @devices = `sudo tcpdump -i mon1 -e -s 256 type mgt subtype probe-req -c 10 2
 my $num_dev = 0;
 chomp @devices;
 
-
+# checking for results from tcpdump to see which responses are from devices
+# with valid MAC addresses 
 sub containsMAC {
   my @devinfo = @_;
   my $found = 0;
@@ -88,15 +89,6 @@ foreach my $device ( @devices ) {
     containsMAC(@arr1);
   }
 }
-
-=begin comment
-if ( find_dev("XX:XX:XX:XX:XX:XY") ) {
-	#del_dev();
-  update_dev("XX:XX:XX:XX:XX:XY");
-} else {
-  add_dev("XX:XX:XX:XX:XX:XY");
-}
-=cut 
 
 print "Num of Devices Found: $num_dev\n";
 

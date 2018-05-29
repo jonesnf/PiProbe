@@ -19,20 +19,16 @@ print "$dbh\n";
 
 # Delete a device from devices table
 sub del_dev {
-  my $sth = $dbh->prepare("DELETE FROM devices WHERE mac_addr != ''");
-  $sth->execute() or print "Device not in table\n";
-  #print "Number of rows deleted: " . $sth->rows . "\n";
+  my $table = $ARGV[0];
+  print "$table\n";
+  my $sth;
+  if ( $table eq "oui") {
+    $sth = $dbh->prepare("DELETE FROM oui WHERE mac_addr != ''");
+  } else {
+    $sth = $dbh->prepare("DELETE FROM devices WHERE mac_addr != ''");
+  }
+  $sth->execute() or print "Could not delete entries\n";
+  print "Number of rows deleted: " . $sth->rows . "\n";
 }
 
-
-=begin comment
-if ( find_dev("XX:XX:XX:XX:XX:XY") ) {
-	#del_dev();
-  update_dev("XX:XX:XX:XX:XX:XY");
-} else {
-  add_dev("XX:XX:XX:XX:XX:XY");
-}
-=cut 
 del_dev();
-print "Database Cleared.\n";
-
