@@ -8,10 +8,10 @@ print "Starting scan... \n";
 
 # define DBI constants
 my $driver = "mysql";
-my $database = "Gearlab";
+my $database = $ARGV[0];
 my $dsn = "DBI:$driver:database=$database"; 
-my $user = "root";
-my $pwd = "mikki";
+my $user = $ARGV[1];
+my $pwd = $ARGV[2];
 # connect to DB
 my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
 
