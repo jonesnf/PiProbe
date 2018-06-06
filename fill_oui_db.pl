@@ -6,10 +6,10 @@ use DBI;
 
 # Database constants
 my $driver = "mysql";
-my $database = "Gearlab";
+my $database = $ARGV[0];
 my $dsn = "DBI:$driver:database=$database";
-my $user = "root";
-my $pwd = "mikki";
+my $user = $ARGV[1];
+my $pwd = $ARGV[2];
 
 print "Connecting to Database: '$database'...\n";
 # connect to database

@@ -8,10 +8,10 @@ print "Clearing Database... \n";
 
 # define DBI constants
 my $driver = "mysql";
-my $database = "Gearlab";
+my $database = $ARGV[0];
 my $dsn = "DBI:$driver:database=$database"; 
-my $user = "root";
-my $pwd = "mikki";
+my $user = $ARGV[1];
+my $pwd = $ARGV[2];
 # connect to DB
 my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
 print "$dbh\n";
@@ -19,7 +19,7 @@ print "$dbh\n";
 
 # Delete a device from devices table
 sub del_dev {
-  my $table = $ARGV[0];
+  my $table = $ARGV[3];
   print "$table\n";
   my $sth;
   if ( $table eq "oui") {
