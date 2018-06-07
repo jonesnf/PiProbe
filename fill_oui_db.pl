@@ -4,6 +4,11 @@ use strict;
 use warnings;
 use DBI;
 
+my $ARGC = @ARGV;
+if ( $ARGC != 4 ) {
+    die "To execute: sudo ./<script> <database> <user> <pwd> <oui_file>";
+}
+
 # Database constants
 my $driver = "mysql";
 my $database = $ARGV[0];
@@ -17,7 +22,7 @@ my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
 print "Database: $dbh\n";
 
 # open oui file
-my $ouifile = "oui.txt";
+my $ouifile = $ARGV[3];
 open (my $fh, '<', $ouifile)
 	or die "Could not open '$ouifile'\n";
 

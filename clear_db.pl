@@ -4,6 +4,11 @@ use DBI;
 use strict;
 use warnings;
 
+my $ARGC = @ARGV;
+if ( $ARGC != 4 ) {
+    die "To run: sudo ./<script> <database> <user> <pwd> <table_to_clear>";
+}
+
 print "Clearing Database... \n";
 
 # define DBI constants
@@ -12,10 +17,9 @@ my $database = $ARGV[0];
 my $dsn = "DBI:$driver:database=$database"; 
 my $user = $ARGV[1];
 my $pwd = $ARGV[2];
+
 # connect to DB
 my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
-print "$dbh\n";
-
 
 # Delete a device from devices table
 sub del_dev {
@@ -23,9 +27,9 @@ sub del_dev {
   print "$table\n";
   my $sth;
   if ( $table eq "oui") {
-    $sth = $dbh->prepare("DELETE FROM oui WHERE mac_addr != ''");
+      $sth = $dbh->prepare("DELETE FROM oui WHERE mac_addr != ''");
   } else {
-    $sth = $dbh->prepare("DELETE FROM devices WHERE mac_addr != ''");
+      $sth = $dbh->prepare("DELETE FROM devices WHERE mac_addr != ''");
   }
   $sth->execute() or print "Could not delete entries\n";
   print "Number of rows deleted: " . $sth->rows . "\n";

@@ -4,6 +4,11 @@ use DBI;
 use strict;
 use warnings;
 
+my $ARGC = @ARGV;
+if ( $ARGC != 3 ) {
+  die "To execute script: sudo ./<script> <database> <user> <pwd>";
+} 
+
 print "Starting scan... \n";
 
 # define DBI constants
@@ -12,6 +17,7 @@ my $database = $ARGV[0];
 my $dsn = "DBI:$driver:database=$database"; 
 my $user = $ARGV[1];
 my $pwd = $ARGV[2];
+
 # connect to DB
 my $dbh = DBI->connect($dsn, $user, $pwd) or die my $DBI:errstr;
 
